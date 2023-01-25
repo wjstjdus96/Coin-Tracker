@@ -3,7 +3,7 @@ import { createGlobalStyle } from "styled-components";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { ThemeProvider } from "styled-components";
 import { useState } from "react";
-import { darkTheme, lightTheme } from "./theme";
+import { lightTheme } from "./theme";
 import { useRecoilValue } from "recoil";
 import { isDarkAtom } from "./atoms";
 
@@ -58,7 +58,8 @@ table {
 body{
   font-family: 'Source Sans Pro', sans-serif;
   background-color: ${(props) => props.theme.bgColor};
-  color:${(props) => props.theme.textColor};
+  /* color:${(props) => props.theme.textColor}; */
+  color: black;
   line-height: 1.2;
 }
 a{
@@ -70,7 +71,7 @@ function App() {
   const isDark = useRecoilValue(isDarkAtom);
   return (
     <>
-      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+      <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Router />
         <ReactQueryDevtools initialIsOpen={true} />
