@@ -37,5 +37,5 @@ export const coinState = atom<ICoinState>({
 
 export const trashBinState = atom<boolean>({
   key: "trash",
-  default: true,
+  default: false,
 });

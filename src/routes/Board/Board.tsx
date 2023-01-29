@@ -10,6 +10,8 @@ const Wrapper = styled.div<IWrapper>`
   min-height: 300px;
   display: flex;
   flex-direction: column;
+  box-shadow: ${(props) =>
+    props.isDragging ? "0px 5px 5px rgba(0, 0, 0, 0.1)" : "none"};
 `;
 const BoardTitle = styled.h2`
   text-align: center;
