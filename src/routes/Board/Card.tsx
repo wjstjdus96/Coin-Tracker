@@ -5,7 +5,7 @@ const Wrapper = styled.div`
   border-radius: 5px;
   margin-bottom: 5px;
   padding: 10px 10px;
-  background-color: lightgrey;
+  background-color: #a3a3d4;
 `;
 
 interface ICardProps {
@@ -16,7 +16,7 @@ interface ICardProps {
 
 function Card({ coinId, coinText, index }: ICardProps) {
   return (
-    <Draggable draggableId={coinId} index={index}>
+    <Draggable draggableId={coinId} index={index} key={coinId}>
       {(provided) => (
         <Wrapper
           ref={provided.innerRef}
