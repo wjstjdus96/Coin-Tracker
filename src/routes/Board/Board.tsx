@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 import { ICoin } from "../../atoms";
@@ -56,7 +57,7 @@ function Board({ boardId, coins, index }: IBoardProps) {
           isDragging={snapshot.isDragging}
         >
           <BoardTitle>{boardId}</BoardTitle>
-          <Droppable droppableId={boardId} type="coin">
+          <Droppable droppableId={boardId} type="coins">
             {(provided, snapshot) => (
               <Area
                 ref={provided.innerRef}
@@ -81,4 +82,4 @@ function Board({ boardId, coins, index }: IBoardProps) {
   );
 }
 
-export default Board;
+export default React.memo(Board);

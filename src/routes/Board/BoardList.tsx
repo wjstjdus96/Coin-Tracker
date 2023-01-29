@@ -3,6 +3,7 @@ import {
   Droppable,
   Draggable,
   DropResult,
+  DragStart,
 } from "react-beautiful-dnd";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
@@ -35,14 +36,6 @@ const Boards = styled.div`
   gap: 50px;
 `;
 
-const TrashBinWrapper = styled.div`
-  position: absolute;
-  background-color: black;
-  bottom: 80px;
-  width: 100px;
-  height: 100px;
-`;
-
 function BoardList() {
   const [boards, setBoards] = useRecoilState(boardState);
   const [coins, setCoins] = useRecoilState(coinState);
@@ -59,6 +52,12 @@ function BoardList() {
         const item = boardCopy.splice(source.index, 1)[0];
         boardCopy.splice(destination.index, 0, item);
         return boardCopy;
+      });
+    } else if (destination.droppableId === "trashcan") {
+      setCoins((allBoards) => {
+        const boardCopy = [...allBoards[source.droppableId]];
+        boardCopy.splice(source.index, 1);
+        return { ...allBoards, [source.droppableId]: boardCopy };
       });
     } else if (source.droppableId === destination?.droppableId) {
       setCoins((allBoards) => {
@@ -83,10 +82,17 @@ function BoardList() {
         };
       });
     }
+
+    setTrashBin(false);
+  };
+  const onDragStart = ({ type }: DragStart) => {
+    if (type === "coins") {
+      setTrashBin(true);
+    }
   };
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
+    <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
       <Wrapper>
         <Title>나의 코인 보드</Title>
         <Droppable droppableId="boards" direction="horizontal" type="boards">
@@ -104,10 +110,8 @@ function BoardList() {
             </Boards>
           )}
         </Droppable>
-        <TrashBinWrapper>
-          <TrashBin />
-        </TrashBinWrapper>
       </Wrapper>
+      <TrashBin />
     </DragDropContext>
   );
 }
