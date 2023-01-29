@@ -6,8 +6,9 @@ import {
 } from "react-beautiful-dnd";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { boardState, coinState } from "../../atoms";
+import { boardState, coinState, trashBinState } from "../../atoms";
 import Board from "./Board";
+import TrashBin from "./TrashBin";
 
 const Wrapper = styled.div`
   display: flex;
@@ -17,6 +18,7 @@ const Wrapper = styled.div`
   margin: 0 auto;
   max-width: 850px;
   width: 100%;
+  position: relative;
 `;
 
 const Title = styled.h1`
@@ -33,9 +35,18 @@ const Boards = styled.div`
   gap: 50px;
 `;
 
+const TrashBinWrapper = styled.div`
+  position: absolute;
+  background-color: black;
+  bottom: 80px;
+  width: 100px;
+  height: 100px;
+`;
+
 function BoardList() {
   const [boards, setBoards] = useRecoilState(boardState);
   const [coins, setCoins] = useRecoilState(coinState);
+  const [trashBin, setTrashBin] = useRecoilState(trashBinState);
   const onDragEnd = (info: DropResult) => {
     console.log(info);
     const { destination, source } = info;
@@ -93,6 +104,9 @@ function BoardList() {
             </Boards>
           )}
         </Droppable>
+        <TrashBinWrapper>
+          <TrashBin />
+        </TrashBinWrapper>
       </Wrapper>
     </DragDropContext>
   );

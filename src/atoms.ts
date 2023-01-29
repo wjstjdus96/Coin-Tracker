@@ -6,25 +6,6 @@ export const isDarkAtom = atom({
   default: true,
 });
 
-//todo 관련
-export interface ITodo {
-  id: number;
-  text: string;
-}
-
-export interface IToDoState {
-  [key: string]: ITodo[];
-}
-
-export const toDoState = atom<IToDoState>({
-  key: "toDo",
-  default: {
-    "To Do": [],
-    Doing: [],
-    Done: [],
-  },
-});
-
 ///
 
 export interface ICoin {
@@ -38,7 +19,7 @@ export interface ICoinState {
 
 export const boardState = atom<string[]>({
   key: "board",
-  default: ["WANT", "HAVE", "SELL"],
+  default: ["WANT", "HAVE", "SELL", "HI"],
 });
 
 export const coinState = atom<ICoinState>({
@@ -46,9 +27,15 @@ export const coinState = atom<ICoinState>({
   default: {
     WANT: [
       { id: 1, text: "hello" },
-      { id: 3, text: "hello" },
+      { id: 3, text: "hi" },
     ],
     HAVE: [{ id: 2, text: "yo" }],
     SELL: [],
+    HI: [],
   },
+});
+
+export const trashBinState = atom<boolean>({
+  key: "trash",
+  default: true,
 });
