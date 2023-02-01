@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import { Droppable, Draggable } from "react-beautiful-dnd";
-import { ICoin } from "../../atoms";
+import { boardState, coinState, ICoin } from "../../atoms";
 import Card from "./Card";
 import { FaRegPlusSquare, FaRegWindowClose } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { TbPlus } from "react-icons/tb";
+import { useRecoilState } from "recoil";
 
 const Wrapper = styled.div<IWrapper>`
   background-color: ${(props) => props.theme.boardColor};
@@ -25,19 +26,21 @@ const BoardHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   margin-bottom: 10px;
+  height: 40px;
 `;
 
 const BoardTitle = styled.h2`
   padding-left: 20px;
-  font-weight: 500;
+  font-weight: 700;
+  font-size: 20px;
 `;
 
 const ButtonWrapper = styled.div`
-  width: 70px;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
   padding-right: 20px;
 `;
 
@@ -49,6 +52,7 @@ const Button = styled.div`
   align-items: center;
   background-color: ${(props) => props.theme.buttonColor};
   border-radius: 20%;
+  cursor: pointer;
 `;
 
 const Area = styled.div<IArea>`
@@ -79,6 +83,18 @@ interface IBoardProps {
 }
 
 function Board({ boardId, coins, index }: IBoardProps) {
+  const [boards, setBoards] = useRecoilState(boardState);
+  const [cards, setCards] = useRecoilState(coinState);
+  const AddCard = () => {};
+  const DeleteBoard = () => {
+    setBoards((allBoards) => {
+      const boardsCopy = [...allBoards];
+      const boardIndex = boardsCopy.findIndex((item) => item == boardId);
+      boardsCopy.splice(boardIndex, 1);
+      return boardsCopy;
+    });
+  };
+
   return (
     <Draggable draggableId={boardId} index={index} key={boardId}>
       {(provided, snapshot) => (
@@ -91,10 +107,10 @@ function Board({ boardId, coins, index }: IBoardProps) {
           <BoardHeader>
             <BoardTitle>{boardId}</BoardTitle>
             <ButtonWrapper>
-              <Button>
-                <TbPlus size="19" />
+              <Button onClick={AddCard}>
+                <TbPlus size="20" />
               </Button>
-              <Button>
+              <Button onClick={DeleteBoard}>
                 <IoClose size="20" />
               </Button>
             </ButtonWrapper>

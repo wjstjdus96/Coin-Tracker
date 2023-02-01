@@ -39,3 +39,13 @@ export const trashBinState = atom<boolean>({
   key: "trash",
   default: false,
 });
+
+export const darkState = atom<boolean>({
+  key: "dark",
+  default: false,
+});
+
+export const boardModalState = atom<boolean>({
+  key: "boardModal",
+  default: false,
+});
