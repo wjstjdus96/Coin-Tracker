@@ -7,18 +7,15 @@ import { DefaultTheme } from "styled-components";
 //   cardBgColor: "transparent",
 // };
 
-// export const lightTheme: DefaultTheme = {
-//   bgColor: "whitesmoke",
-//   textColor: "black",
-//   accentColor: "#9c88ff",
-//   cardBgColor: "white",
-// };
-
 export const lightTheme: DefaultTheme = {
-  textColor: "white",
-  accentColor: "white",
-  cardBgColor: "white",
-  bgColor: "#BDCDF6",
-  boardColor: "#DADFE9",
+  bgColor: "#e7e7e9",
+  textColor: "#222222",
+  secondaryTextColor: "#666666",
+  accentColor: "royalblue",
   cardColor: "white",
+  cardBgColor: "white",
+  boardColor: "#efefef",
+  buttonColor: "#ededed",
+  hoverButtonColor: "#cfcfcf",
+  hoverButtonOverlayColor: "rgba(0, 0, 0, 0.1)",
 };

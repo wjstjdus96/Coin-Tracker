@@ -10,31 +10,42 @@ import styled from "styled-components";
 import { boardState, coinState, trashBinState } from "../../atoms";
 import Board from "./Board";
 import TrashBin from "./TrashBin";
+import { FaRegPlusSquare } from "react-icons/fa";
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
   flex-direction: column;
   margin: 0 auto;
-  max-width: 850px;
+  padding-left: 80px;
+  /* max-width: 850px; */
   width: 100%;
   position: relative;
 `;
+
+const Nav = styled.div``;
 
 const Title = styled.h1`
   margin: 30px 0px 30px;
   font-weight: 700;
   font-size: 30px;
-  color: white;
+  color: ${(props) => props.theme.textColor};
 `;
 
 const Boards = styled.div`
-  display: grid;
+  display: flex;
+  justify-content: baseline;
+  align-items: center;
   width: 100%;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 50px;
 `;
+
+const Buttons = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Button = styled.div``;
 
 function BoardList() {
   const [boards, setBoards] = useRecoilState(boardState);
@@ -94,7 +105,13 @@ function BoardList() {
   return (
     <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
       <Wrapper>
-        <Title>나의 코인 보드</Title>
+        <Nav>
+          <Title>나의 코인 보드</Title>
+          <Buttons>
+            <Button></Button>
+            <Button></Button>
+          </Buttons>
+        </Nav>
         <Droppable droppableId="boards" direction="horizontal" type="boards">
           {(provided, snapshot) => (
             <Boards ref={provided.innerRef} {...provided.droppableProps}>

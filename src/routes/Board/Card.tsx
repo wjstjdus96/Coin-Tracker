@@ -5,7 +5,7 @@ const Wrapper = styled.div<{ isDragging: boolean }>`
   border-radius: 5px;
   margin-bottom: 5px;
   padding: 10px 10px;
-  background-color: #a3a3d4;
+  background-color: ${(props) => props.theme.cardColor};
   box-shadow: ${(props) =>
     props.isDragging ? "0px 5px 5px rgba(0, 0, 0, 0.1)" : "none"};
 `;

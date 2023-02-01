@@ -14,7 +14,7 @@ const Wrapper = styled.div<{ isDraggingOver: boolean; trashBin: boolean }>`
   border-radius: 50%;
   background-color: white;
   box-shadow: ${(props) =>
-    props.isDraggingOver ? "0px 10px 10px #999CBD" : "none"};
+    props.isDraggingOver ? "0px 10px 10px #a8add9" : "none"};
   display: flex;
   align-items: stretch;
   justify-content: center;
@@ -26,6 +26,7 @@ const Icon = styled(FaTrash)<{ trashBin: boolean }>`
   bottom: 95px;
   right: 115px;
   visibility: ${(props) => (props.trashBin ? "visible" : "hidden")};
+  color: ${(props) => props.theme.accentColor};
 `;
 
 function TrashBin() {
@@ -42,7 +43,7 @@ function TrashBin() {
           >
             {provided.placeholder}
           </Wrapper>
-          <Icon trashBin={trashBin} size="70" color="#A9A5D6" />
+          <Icon trashBin={trashBin} size="70" />
         </>
       )}
     </Droppable>

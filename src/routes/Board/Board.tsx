@@ -3,22 +3,54 @@ import styled from "styled-components";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 import { ICoin } from "../../atoms";
 import Card from "./Card";
+import { FaRegPlusSquare, FaRegWindowClose } from "react-icons/fa";
+import { IoClose } from "react-icons/io5";
+import { TbPlus } from "react-icons/tb";
 
 const Wrapper = styled.div<IWrapper>`
-  background-color: white;
+  background-color: ${(props) => props.theme.boardColor};
   padding-top: 10px;
-  border-radius: 9px;
-  min-height: 300px;
+  margin-right: 40px;
+  border-radius: 15px;
+  width: 400px;
+  min-height: 500px;
+  max-height: 50%;
   display: flex;
   flex-direction: column;
   box-shadow: ${(props) =>
     props.isDragging ? "0px 5px 5px rgba(0, 0, 0, 0.1)" : "none"};
 `;
-const BoardTitle = styled.h2`
-  text-align: center;
-  font-weight: 500;
+
+const BoardHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
   margin-bottom: 10px;
 `;
+
+const BoardTitle = styled.h2`
+  padding-left: 20px;
+  font-weight: 500;
+`;
+
+const ButtonWrapper = styled.div`
+  width: 70px;
+  display: flex;
+  justify-content: space-between;
+  padding-right: 20px;
+`;
+
+const Button = styled.div`
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${(props) => props.theme.buttonColor};
+  border-radius: 20%;
+`;
+
 const Area = styled.div<IArea>`
   background-color: ${(props) =>
     props.isDraggingOver
@@ -56,7 +88,17 @@ function Board({ boardId, coins, index }: IBoardProps) {
           ref={provided.innerRef}
           isDragging={snapshot.isDragging}
         >
-          <BoardTitle>{boardId}</BoardTitle>
+          <BoardHeader>
+            <BoardTitle>{boardId}</BoardTitle>
+            <ButtonWrapper>
+              <Button>
+                <TbPlus size="19" />
+              </Button>
+              <Button>
+                <IoClose size="20" />
+              </Button>
+            </ButtonWrapper>
+          </BoardHeader>
           <Droppable droppableId={boardId} type="coins">
             {(provided, snapshot) => (
               <Area
