@@ -19,7 +19,9 @@ const Wrapper = styled.div<IWrapper>`
   display: flex;
   flex-direction: column;
   box-shadow: ${(props) =>
-    props.isDragging ? "0px 5px 5px rgba(0, 0, 0, 0.1)" : "none"};
+    props.isDragging
+      ? "0px 5px 5px rgba(0, 0, 0, 0.1)"
+      : "0 0.3rem 0.6rem rgba(0, 0, 0, 0.15);"};
 `;
 
 const BoardHeader = styled.div`

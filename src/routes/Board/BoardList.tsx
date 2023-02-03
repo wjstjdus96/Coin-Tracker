@@ -19,6 +19,7 @@ import TrashBin from "./TrashBin";
 import { AiOutlineAppstoreAdd } from "react-icons/ai";
 import { MdNightlight, MdLightMode } from "react-icons/md";
 import AddBoard from "./AddBoard";
+import { useEffect } from "react";
 
 const Wrapper = styled.div`
   display: flex;
@@ -28,7 +29,7 @@ const Wrapper = styled.div`
   padding-left: 50px;
   /* max-width: 850px; */
   width: 100%;
-  position: relative;
+  /* position: relative; */
 `;
 
 const Nav = styled.div`
@@ -68,6 +69,16 @@ const Button = styled.div`
   &:hover {
     color: ${(props) => props.theme.accentColor};
   }
+`;
+
+const Overlay = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 function BoardList() {
@@ -129,18 +140,26 @@ function BoardList() {
   };
 
   const onAddBoard = () => {
-    setBoardModal(true);
+    setBoardModal((prev) => !prev);
   };
 
   const onChangeTheme = () => {
     setIsDark((prev) => !prev);
   };
+  const closeModal = () => {
+    setBoardModal(false);
+  };
+
+  useEffect(() => {
+    console.log(boards);
+  }, [boards]);
 
   return (
     <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
+      {boardModal && <Overlay onClick={closeModal}></Overlay>}
       <Wrapper>
         <Nav>
-          <Title>나의 코인 보드</Title>
+          <Title>보드</Title>
           <Buttons>
             <Button onClick={onAddBoard}>
               <AiOutlineAppstoreAdd size="30" />
@@ -150,7 +169,7 @@ function BoardList() {
             </Button>
           </Buttons>
         </Nav>
-        {boardModal && <AddBoard setModalOpen={setBoardModal} />}
+        {boardModal && <AddBoard />}
         <Droppable droppableId="boards" direction="horizontal" type="boards">
           {(provided, snapshot) => (
             <Boards ref={provided.innerRef} {...provided.droppableProps}>
