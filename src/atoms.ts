@@ -11,9 +11,11 @@ export const isDarkAtom = atom({
 export interface ICoin {
   id: number;
   text: string;
+  price: number;
+  purchase: number;
 }
 
-export interface ICoinState {
+export interface ICardState {
   [key: string]: ICoin[];
 }
 
@@ -22,14 +24,14 @@ export const boardState = atom<string[]>({
   default: ["WANT", "HAVE", "SELL", "HI"],
 });
 
-export const coinState = atom<ICoinState>({
-  key: "coin",
+export const cardState = atom<ICardState>({
+  key: "card",
   default: {
     WANT: [
-      { id: 1, text: "hello" },
-      { id: 3, text: "hi" },
+      { id: 1, text: "hello", price: 1999237478, purchase: 20 },
+      { id: 3, text: "hi", price: 197478, purchase: 10 },
     ],
-    HAVE: [{ id: 2, text: "yo" }],
+    HAVE: [{ id: 2, text: "yo", price: 3423743432378, purchase: 23 }],
     SELL: [],
     HI: [],
   },

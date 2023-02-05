@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Droppable, Draggable } from "react-beautiful-dnd";
-import { boardState, coinState, ICoin } from "../../atoms";
+import { boardState, cardState, ICoin } from "../../atoms";
 import Card from "./Card";
 import { FaRegPlusSquare, FaRegWindowClose } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
@@ -80,13 +80,13 @@ interface IWrapper {
 
 interface IBoardProps {
   boardId: string;
-  coins: ICoin[];
+  cards: ICoin[];
   index: number;
 }
 
-function Board({ boardId, coins, index }: IBoardProps) {
+function Board({ boardId, cards, index }: IBoardProps) {
   const [boards, setBoards] = useRecoilState(boardState);
-  const [cards, setCards] = useRecoilState(coinState);
+
   const AddCard = () => {};
   const DeleteBoard = () => {
     setBoards((allBoards) => {
@@ -96,7 +96,14 @@ function Board({ boardId, coins, index }: IBoardProps) {
       return boardsCopy;
     });
   };
-
+  const changeTitle = (event: React.FormEvent<HTMLInputElement>) => {
+    const { value } = event.currentTarget;
+    setBoards((allBoards) => {
+      const newBoards = [...allBoards];
+      newBoards.splice(index, 1, value);
+      return newBoards;
+    });
+  };
   return (
     <Draggable draggableId={boardId} index={index} key={boardId}>
       {(provided, snapshot) => (
@@ -107,6 +114,10 @@ function Board({ boardId, coins, index }: IBoardProps) {
           isDragging={snapshot.isDragging}
         >
           <BoardHeader>
+            {/* <BoardTitle
+              onChange={changeTitle}
+              value={boards[index]}
+            ></BoardTitle> */}
             <BoardTitle>{boardId}</BoardTitle>
             <ButtonWrapper>
               <Button onClick={AddCard}>
@@ -117,7 +128,7 @@ function Board({ boardId, coins, index }: IBoardProps) {
               </Button>
             </ButtonWrapper>
           </BoardHeader>
-          <Droppable droppableId={boardId} type="coins">
+          <Droppable droppableId={boardId} type="cards">
             {(provided, snapshot) => (
               <Area
                 ref={provided.innerRef}
@@ -125,7 +136,7 @@ function Board({ boardId, coins, index }: IBoardProps) {
                 isDraggingOver={snapshot.isDraggingOver}
                 isDraggingFromthis={Boolean(snapshot.draggingFromThisWith)}
               >
-                {coins.map((coin, idx) => (
+                {cards.map((coin, idx) => (
                   <Card
                     coinId={coin.id + ""}
                     coinText={coin.text}

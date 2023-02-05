@@ -10,7 +10,7 @@ import styled from "styled-components";
 import {
   boardModalState,
   boardState,
-  coinState,
+  cardState,
   darkState,
   trashBinState,
 } from "../../atoms";
@@ -83,7 +83,7 @@ const Overlay = styled.div`
 
 function BoardList() {
   const [boards, setBoards] = useRecoilState(boardState);
-  const [coins, setCoins] = useRecoilState(coinState);
+  const [cards, setCards] = useRecoilState(cardState);
   const [trashBin, setTrashBin] = useRecoilState(trashBinState);
   const [isDark, setIsDark] = useRecoilState(darkState);
   const [boardModal, setBoardModal] = useRecoilState(boardModalState);
@@ -101,13 +101,13 @@ function BoardList() {
         return boardCopy;
       });
     } else if (destination.droppableId === "trashcan") {
-      setCoins((allBoards) => {
+      setCards((allBoards) => {
         const boardCopy = [...allBoards[source.droppableId]];
         boardCopy.splice(source.index, 1);
         return { ...allBoards, [source.droppableId]: boardCopy };
       });
     } else if (source.droppableId === destination?.droppableId) {
-      setCoins((allBoards) => {
+      setCards((allBoards) => {
         const boardCopy = [...allBoards[source.droppableId]];
         const item = boardCopy.splice(source.index, 1)[0];
         boardCopy.splice(destination.index, 0, item);
@@ -117,7 +117,7 @@ function BoardList() {
         };
       });
     } else if (destination.droppableId !== source.droppableId) {
-      setCoins((allBoards) => {
+      setCards((allBoards) => {
         const destinationCopy = [...allBoards[destination.droppableId]];
         const sourceCopy = [...allBoards[source.droppableId]];
         const item = sourceCopy.splice(source.index, 1)[0];
@@ -134,7 +134,7 @@ function BoardList() {
   };
 
   const onDragStart = ({ type }: DragStart) => {
-    if (type === "coins") {
+    if (type === "cards") {
       setTrashBin(true);
     }
   };
@@ -146,13 +146,15 @@ function BoardList() {
   const onChangeTheme = () => {
     setIsDark((prev) => !prev);
   };
+
   const closeModal = () => {
     setBoardModal(false);
   };
 
   useEffect(() => {
     console.log(boards);
-  }, [boards]);
+    console.log(cards);
+  }, [boards, cards]);
 
   return (
     <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
@@ -178,7 +180,7 @@ function BoardList() {
                   key={idx}
                   index={idx}
                   boardId={boardId}
-                  coins={coins[boardId]}
+                  cards={cards[boardId]}
                 ></Board>
               ))}
               {provided.placeholder}
