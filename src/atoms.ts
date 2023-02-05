@@ -10,8 +10,8 @@ export const isDarkAtom = atom({
 
 export interface ICoin {
   id: number;
-  text: string;
-  price: number;
+  name: string;
+  price: string;
   purchase: number;
 }
 
@@ -28,10 +28,10 @@ export const cardState = atom<ICardState>({
   key: "card",
   default: {
     WANT: [
-      { id: 1, text: "hello", price: 1999237478, purchase: 20 },
-      { id: 3, text: "hi", price: 197478, purchase: 10 },
+      { id: 1, name: "hello", price: "1999237478", purchase: 20 },
+      { id: 3, name: "hi", price: "197478", purchase: 10 },
     ],
-    HAVE: [{ id: 2, text: "yo", price: 3423743432378, purchase: 23 }],
+    HAVE: [{ id: 2, name: "yo", price: "3423743432378", purchase: 23 }],
     SELL: [],
     HI: [],
   },

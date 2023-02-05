@@ -7,7 +7,7 @@ import { FaTrash } from "react-icons/fa";
 const Wrapper = styled.div<{ isDraggingOver: boolean; trashBin: boolean }>`
   position: absolute;
   bottom: 80px;
-  right: 100px;
+  left: 720px;
   width: 100px;
   height: 100px;
   padding: 15px 0px;
@@ -24,7 +24,7 @@ const Wrapper = styled.div<{ isDraggingOver: boolean; trashBin: boolean }>`
 const Icon = styled(FaTrash)<{ trashBin: boolean }>`
   position: absolute;
   bottom: 95px;
-  right: 115px;
+  left: 735px;
   visibility: ${(props) => (props.trashBin ? "visible" : "hidden")};
   color: ${(props) => props.theme.accentColor};
 `;

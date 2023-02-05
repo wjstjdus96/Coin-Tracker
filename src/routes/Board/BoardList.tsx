@@ -48,7 +48,7 @@ const Title = styled.h1`
 const Boards = styled.div`
   display: flex;
   justify-content: baseline;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
 `;
 

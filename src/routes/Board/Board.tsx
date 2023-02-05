@@ -14,8 +14,8 @@ const Wrapper = styled.div<IWrapper>`
   margin-right: 40px;
   border-radius: 15px;
   width: 400px;
-  min-height: 500px;
-  max-height: 50%;
+  min-height: 250px;
+  max-height: 590px;
   display: flex;
   flex-direction: column;
   box-shadow: ${(props) =>
@@ -69,6 +69,13 @@ const Area = styled.div<IArea>`
   transition: background-color 0.3s ease-in-out;
 `;
 
+const PriceDiv = styled.div`
+  height: 65px;
+  background-color: ${(props) => props.theme.cardColor};
+  border-radius: 0 0 15px 15px;
+  box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.15);
+`;
+
 interface IArea {
   isDraggingOver: boolean;
   isDraggingFromthis: boolean;
@@ -86,7 +93,7 @@ interface IBoardProps {
 
 function Board({ boardId, cards, index }: IBoardProps) {
   const [boards, setBoards] = useRecoilState(boardState);
-
+  const [allCards, setAllCards] = useRecoilState(cardState);
   const AddCard = () => {};
   const DeleteBoard = () => {
     setBoards((allBoards) => {
@@ -139,14 +146,17 @@ function Board({ boardId, cards, index }: IBoardProps) {
                 {cards.map((coin, idx) => (
                   <Card
                     coinId={coin.id + ""}
-                    coinText={coin.text}
+                    coinName={coin.name}
                     index={idx}
+                    coinPrice={coin.price}
+                    coinPurchase={coin.purchase}
                   ></Card>
                 ))}
                 {provided.placeholder}
               </Area>
             )}
           </Droppable>
+          <PriceDiv></PriceDiv>
         </Wrapper>
       )}
     </Draggable>

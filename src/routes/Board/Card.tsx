@@ -2,21 +2,43 @@ import styled from "styled-components";
 import { Draggable } from "react-beautiful-dnd";
 
 const Wrapper = styled.div<{ isDragging: boolean }>`
-  border-radius: 5px;
-  margin-bottom: 5px;
-  padding: 10px 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  padding: 15px 15px;
   background-color: ${(props) => props.theme.cardColor};
   box-shadow: ${(props) =>
-    props.isDragging ? "0px 5px 5px rgba(0, 0, 0, 0.1)" : "none"};
+    props.isDragging
+      ? "0px 0.4rem 0.6rem rgba(0, 0, 0, 0.3)"
+      : "0 0.2rem 0.4rem rgba(0, 0, 0, 0.15);"};
+  & > * {
+  }
+  & > div:first-child {
+  }
+  & > div:last-child {
+    padding-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    width: 100%;
+  }
 `;
 
 interface ICardProps {
   coinId: string;
-  coinText: string;
   index: number;
+  coinName: string;
+  coinPrice: string;
+  coinPurchase: number;
 }
 
-function Card({ coinId, coinText, index }: ICardProps) {
+function Card({
+  index,
+  coinId,
+  coinName,
+  coinPrice,
+  coinPurchase,
+}: ICardProps) {
   return (
     <Draggable draggableId={coinId} index={index} key={coinId}>
       {(provided, snapshot) => (
@@ -26,7 +48,11 @@ function Card({ coinId, coinText, index }: ICardProps) {
           {...provided.dragHandleProps}
           isDragging={snapshot.isDragging}
         >
-          {coinText}
+          <div>{coinName}</div>
+          <div>
+            <div>$ {coinPrice.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
+            <div>{coinPurchase} coins</div>
+          </div>
         </Wrapper>
       )}
     </Draggable>
