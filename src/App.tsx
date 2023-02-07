@@ -2,10 +2,12 @@ import Router from "./Router";
 import { createGlobalStyle } from "styled-components";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { ThemeProvider } from "styled-components";
-import { useState } from "react";
-import { lightTheme } from "./theme";
+import { useEffect } from "react";
+import { lightTheme, darkTheme } from "./theme";
 import { useRecoilValue } from "recoil";
-import { isDarkAtom } from "./atoms";
+import { darkState } from "./atoms";
+import Nav from "./routes/NavBar";
+import styled from "styled-components";
 
 const GlobalStyle = createGlobalStyle`@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
 html, body, div, span, applet, object, iframe,
@@ -67,14 +69,30 @@ a{
   color: inherit;
 }`;
 
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0 auto;
+  padding-left: 50px;
+  /* max-width: 850px; */
+  width: 100%;
+  /* position: relative; */
+`;
+
 function App() {
-  const isDark = useRecoilValue(isDarkAtom);
+  const isDark = useRecoilValue(darkState);
+  useEffect(() => {
+    console.log(isDark);
+  }, [isDark]);
   return (
     <>
-      <ThemeProvider theme={lightTheme}>
+      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
         <GlobalStyle />
-        <Router />
-        <ReactQueryDevtools initialIsOpen={true} />
+        <Wrapper>
+          <Nav />
+          <Router />
+        </Wrapper>
       </ThemeProvider>
     </>
   );

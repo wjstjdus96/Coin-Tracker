@@ -19,3 +19,16 @@ export const lightTheme: DefaultTheme = {
   hoverButtonColor: "#cfcfcf",
   hoverButtonOverlayColor: "rgba(0, 0, 0, 0.1)",
 };
+
+export const darkTheme: DefaultTheme = {
+  bgColor: "#222222",
+  textColor: "#efefef",
+  secondaryTextColor: "#adadad",
+  accentColor: "royalblue",
+  cardColor: "#3b3b3b",
+  cardBgColor: "white",
+  boardColor: "#292a2c",
+  buttonColor: "#555555",
+  hoverButtonColor: "#333333",
+  hoverButtonOverlayColor: "rgba(255, 255, 255, 0.1)",
+};

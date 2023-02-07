@@ -159,8 +159,8 @@ function BoardList() {
   return (
     <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
       {boardModal && <Overlay onClick={closeModal}></Overlay>}
-      <Wrapper>
-        <Nav>
+      <>
+        {/* <Nav>
           <Title>보드</Title>
           <Buttons>
             <Button onClick={onAddBoard}>
@@ -170,7 +170,7 @@ function BoardList() {
               {isDark ? <MdNightlight size="30" /> : <MdLightMode size="30" />}
             </Button>
           </Buttons>
-        </Nav>
+        </Nav> */}
         {boardModal && <AddBoard />}
         <Droppable droppableId="boards" direction="horizontal" type="boards">
           {(provided, snapshot) => (
@@ -187,7 +187,7 @@ function BoardList() {
             </Boards>
           )}
         </Droppable>
-      </Wrapper>
+      </>
       <TrashBin />
     </DragDropContext>
   );

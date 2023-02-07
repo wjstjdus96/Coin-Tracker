@@ -1,11 +1,6 @@
 import { type } from "os";
 import { atom, selector } from "recoil";
 
-export const isDarkAtom = atom({
-  key: "isDark",
-  default: true,
-});
-
 ///
 
 export interface ICoin {
@@ -47,7 +42,17 @@ export const darkState = atom<boolean>({
   default: false,
 });
 
+export const modalState = atom<boolean>({
+  key: "modal",
+  default: false,
+});
+
 export const boardModalState = atom<boolean>({
   key: "boardModal",
+  default: false,
+});
+
+export const cardModalState = atom<boolean>({
+  key: "cardModal",
   default: false,
 });
