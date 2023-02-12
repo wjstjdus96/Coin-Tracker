@@ -13,9 +13,11 @@ const Wrapper = styled.div<{ isDragging: boolean }>`
   & > * {
   }
   & > div:first-child {
+    border-bottom: 2px solid ${(props) => props.theme.bgColor};
+    padding-bottom: 10px;
   }
   & > div:last-child {
-    padding-top: 15px;
+    padding-top: 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;

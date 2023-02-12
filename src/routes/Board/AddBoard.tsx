@@ -1,5 +1,15 @@
-import { SetterOrUpdater, useRecoilState } from "recoil";
-import { boardModalState, boardState, cardState } from "../../atoms";
+import {
+  SetterOrUpdater,
+  useRecoilState,
+  useRecoilValue,
+  useSetRecoilState,
+} from "recoil";
+import {
+  boardModalState,
+  boardState,
+  cardState,
+  modalState,
+} from "../../atoms";
 import styled from "styled-components";
 import { IoClose } from "react-icons/io5";
 import { useForm } from "react-hook-form";
@@ -55,17 +65,18 @@ function AddBoard() {
   const [boardModal, setBoardModal] = useRecoilState(boardModalState);
   const [boards, setBoards] = useRecoilState(boardState);
   const [cards, setCards] = useRecoilState(cardState);
+  const setModal = useSetRecoilState(modalState);
   const { register, handleSubmit } = useForm<IForm>();
 
   const closeModal = () => {
     setBoardModal(false);
+    setModal(false);
   };
 
   const onValid = (data: any) => {
     setCards((oldCards) => ({ ...oldCards, [data.board]: [] }));
     setBoards((oldBoards) => [...oldBoards, data.board]);
-
-    setBoardModal(false);
+    closeModal();
   };
 
   return (

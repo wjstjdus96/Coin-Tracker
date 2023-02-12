@@ -1,12 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 import { Droppable, Draggable } from "react-beautiful-dnd";
-import { boardState, cardModalState, cardState, ICoin } from "../../atoms";
+import {
+  boardState,
+  cardModalState,
+  cardState,
+  ICoin,
+  modalState,
+} from "../../atoms";
 import Card from "./Card";
 import { FaRegPlusSquare, FaRegWindowClose } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { TbPlus } from "react-icons/tb";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import AddCardModal from "./AddCardModal";
 
 const Wrapper = styled.div<IWrapper>`
@@ -96,8 +102,10 @@ function Board({ boardId, cards, index }: IBoardProps) {
   const [boards, setBoards] = useRecoilState(boardState);
   const [allCards, setAllCards] = useRecoilState(cardState);
   const [cardModal, setCardModal] = useRecoilState(cardModalState);
+  const setModal = useSetRecoilState(modalState);
   const AddCard = () => {
     setCardModal(true);
+    setModal(true);
   };
   const DeleteBoard = () => {
     setBoards((allBoards) => {
@@ -124,7 +132,7 @@ function Board({ boardId, cards, index }: IBoardProps) {
           ref={provided.innerRef}
           isDragging={snapshot.isDragging}
         >
-          {cardModal && <AddCardModal />}
+          {cardModal && <AddCardModal boardId={boardId} />}
           <BoardHeader>
             {/* <BoardTitle
               onChange={changeTitle}

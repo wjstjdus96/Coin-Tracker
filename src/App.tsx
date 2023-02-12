@@ -4,8 +4,13 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import { ThemeProvider } from "styled-components";
 import { useEffect } from "react";
 import { lightTheme, darkTheme } from "./theme";
-import { useRecoilValue } from "recoil";
-import { darkState } from "./atoms";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  boardModalState,
+  cardModalState,
+  darkState,
+  modalState,
+} from "./atoms";
 import Nav from "./routes/NavBar";
 import styled from "styled-components";
 
@@ -80,17 +85,34 @@ const Wrapper = styled.div`
   /* position: relative; */
 `;
 
+const Overlay = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 function App() {
   const isDark = useRecoilValue(darkState);
-  useEffect(() => {
-    console.log(isDark);
-  }, [isDark]);
+  const [modal, setModal] = useRecoilState(modalState);
+  const setBoardModal = useSetRecoilState(boardModalState);
+  const setCardModal = useSetRecoilState(cardModalState);
+
+  const closeModal = () => {
+    setModal(false);
+    setBoardModal(false);
+    setCardModal(false);
+  };
+
   return (
     <>
       <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
         <GlobalStyle />
+        {modal && <Overlay onClick={closeModal}></Overlay>}
         <Wrapper>
-          <Nav />
           <Router />
         </Wrapper>
       </ThemeProvider>

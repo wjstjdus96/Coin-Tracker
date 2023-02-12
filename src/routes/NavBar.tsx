@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { AiOutlineAppstoreAdd } from "react-icons/ai";
-import { MdNightlight, MdLightMode } from "react-icons/md";
-import { boardModalState, boardState, darkState } from "../atoms";
+import { FiHome } from "react-icons/fi";
+import { MdNightlight, MdLightMode, MdHome } from "react-icons/md";
+import { boardModalState, boardState, darkState, modalState } from "../atoms";
+import { Link } from "react-router-dom";
 
 const Nav = styled.div`
   display: flex;
@@ -39,8 +41,10 @@ const Button = styled.div`
 function NavBar() {
   const [boardModal, setBoardModal] = useRecoilState(boardModalState);
   const [isDark, setIsDark] = useRecoilState(darkState);
+  const [modal, setModal] = useRecoilState(modalState);
   const onAddBoard = () => {
     setBoardModal((prev) => !prev);
+    setModal(true);
   };
 
   const onChangeTheme = () => {
@@ -55,6 +59,11 @@ function NavBar() {
         </Button>
         <Button onClick={onChangeTheme}>
           {isDark ? <MdNightlight size="30" /> : <MdLightMode size="30" />}
+        </Button>
+        <Button>
+          <Link to="/">
+            <MdHome size="33" />
+          </Link>
         </Button>
       </Buttons>
     </Nav>

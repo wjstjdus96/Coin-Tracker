@@ -9,7 +9,7 @@ function Router() {
       <Switch>
         <Route path="/board" component={BoardList} />
         <Route path="/:coinId" component={Coin} />
-        <Route path="/" component={Coins} />
+        <Route exact path="/" component={Coins} />
       </Switch>
     </BrowserRouter>
   );

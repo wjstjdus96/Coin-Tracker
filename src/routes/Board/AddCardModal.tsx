@@ -31,16 +31,54 @@ const Button = styled.div`
 `;
 
 const Form = styled.form`
-  padding: 50px 40px 0px;
+  padding: 30px 40px 0px;
+
+  & > h2 {
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+
+  & > input {
+    margin-bottom: 5px;
+    border: solid 2px ${(props) => props.theme.buttonColor};
+    border-radius: 5px;
+    padding: 5px;
+  }
 `;
 
-function AddCard() {
+interface IForm {
+  name: string;
+  price: string;
+  purchase: number;
+}
+
+interface IAddCard {
+  boardId: string;
+}
+
+function AddCard({ boardId }: IAddCard) {
+  const { register, handleSubmit } = useForm<IForm>();
   const setModal = useSetRecoilState(modalState);
   const setCardModal = useSetRecoilState(cardModalState);
+  const setCards = useSetRecoilState(cardState);
 
   const closeModal = () => {
     setCardModal(false);
     setModal(false);
+  };
+
+  const onValid = (data: any) => {
+    setCards((prev) => {
+      const newCard = {
+        id: Date.now(),
+        name: data.name,
+        price: data.price,
+        purchase: data.purchase,
+      };
+      const cardCopy = prev[boardId];
+      return { ...prev, [boardId]: cardCopy.concat(newCard) };
+    });
+    closeModal();
   };
 
   return (
@@ -48,8 +86,16 @@ function AddCard() {
       <Button onClick={closeModal}>
         <IoClose />
       </Button>
-      <Form>
+      <Form onSubmit={handleSubmit(onValid)}>
         <h2>새 카드 생성</h2>
+        <input id="name" placeholder="코인 이름" {...register("name")} />
+        <input id="price" placeholder="코인 가격" {...register("price")} />
+        <input
+          id="purchase"
+          placeholder="코인 개수"
+          {...register("purchase")}
+        />
+        <button type="submit">생성</button>
       </Form>
     </Wrapper>
   );
