@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 import {
@@ -81,6 +81,15 @@ const PriceDiv = styled.div`
   background-color: ${(props) => props.theme.cardColor};
   border-radius: 0 0 15px 15px;
   box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+
+  & > input {
+    border: none;
+    font-weight: 600;
+    font-size: 17px;
+    padding-left: 20px;
+  }
 `;
 
 interface IArea {
@@ -103,9 +112,11 @@ function Board({ boardId, cards, index }: IBoardProps) {
   const [allCards, setAllCards] = useRecoilState(cardState);
   const [cardModal, setCardModal] = useRecoilState(cardModalState);
   const setModal = useSetRecoilState(modalState);
+  const [price, setPrice] = useState<string>();
   const AddCard = () => {
     setCardModal(true);
     setModal(true);
+    console.log(boardId);
   };
   const DeleteBoard = () => {
     setBoards((allBoards) => {
@@ -123,6 +134,19 @@ function Board({ boardId, cards, index }: IBoardProps) {
       return newBoards;
     });
   };
+  const calculatePrice = () => {
+    var acc = 0;
+    cards.map((item) => {
+      acc += Number(item.price) * item.purchase;
+    });
+    setPrice("Total : $ " + String(acc).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+  };
+
+  useEffect(() => {
+    calculatePrice();
+    console.log(allCards);
+  }, [cards]);
+
   return (
     <Draggable draggableId={boardId} index={index} key={boardId}>
       {(provided, snapshot) => (
@@ -169,7 +193,9 @@ function Board({ boardId, cards, index }: IBoardProps) {
               </Area>
             )}
           </Droppable>
-          <PriceDiv></PriceDiv>
+          <PriceDiv>
+            <input value={price || ""} disabled />
+          </PriceDiv>
         </Wrapper>
       )}
     </Draggable>

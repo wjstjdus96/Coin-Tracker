@@ -68,6 +68,7 @@ function AddCard({ boardId }: IAddCard) {
   };
 
   const onValid = (data: any) => {
+    console.log(boardId);
     setCards((prev) => {
       const newCard = {
         id: Date.now(),
